@@ -1,12 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="250" viewBox="0 0 720 250" role="img" aria-labelledby="title desc">
-<title id="title">SNAKE.EXE auto-play preview</title><desc id="desc">An animated neon snake moves around a retro grid and chases a glowing cyan node.</desc>
-<defs><pattern id="grid" width="25" height="25" patternUnits="userSpaceOnUse"><path d="M25 0H0V25" fill="none" stroke="#00ff9c" stroke-opacity=".12" stroke-width="1"/></pattern><filter id="glow"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter><linearGradient id="bg" x2="0" y2="1"><stop stop-color="#071526"/><stop offset="1" stop-color="#020617"/></linearGradient></defs>
-<rect width="720" height="250" rx="14" fill="url(#bg)"/><rect x="12" y="12" width="696" height="226" rx="8" fill="url(#grid)" stroke="#00ff9c" stroke-opacity=".45"/>
-<text x="30" y="36" font-family="monospace" font-size="12" fill="#00ff9c" letter-spacing="2">SNAKE.EXE // AUTO DEMO</text><text x="690" y="36" text-anchor="end" font-family="monospace" font-size="11" fill="#8aa6a0">AI PILOT: ON</text>
-<circle cx="555" cy="135" r="7" fill="#00d9ff" filter="url(#glow)"><animate attributeName="r" values="5;8;5" dur="2.4s" repeatCount="indefinite"/></circle>
-<g filter="url(#glow)"><rect x="110" y="100" width="20" height="20" rx="4" fill="#d7fff0"><animateMotion path="M0 0 H375 V50 H-125 V-50 H-225 V25 H375" dur="16s" repeatCount="indefinite" calcMode="linear"/></rect>
-<rect x="86" y="100" width="20" height="20" rx="4" fill="#00ff9c"><animateMotion path="M0 0 H375 V50 H-125 V-50 H-225 V25 H375" dur="16s" begin="-0.35s" repeatCount="indefinite" calcMode="linear"/></rect>
-<rect x="62" y="100" width="20" height="20" rx="4" fill="#00ff9c"><animateMotion path="M0 0 H375 V50 H-125 V-50 H-225 V25 H375" dur="16s" begin="-0.7s" repeatCount="indefinite" calcMode="linear"/></rect>
-<rect x="38" y="100" width="20" height="20" rx="4" fill="#00ff9c"><animateMotion path="M0 0 H375 V50 H-125 V-50 H-225 V25 H375" dur="16s" begin="-1.05s" repeatCount="indefinite" calcMode="linear"/></rect></g>
-<text x="30" y="215" font-family="monospace" font-size="11" fill="#8aa6a0">SYSTEM ONLINE</text><text x="690" y="215" text-anchor="end" font-family="monospace" font-size="11" fill="#00ff9c">▶ WATCH THE RUN</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="340" viewBox="0 0 900 340" role="img" aria-labelledby="title desc">
+<title id="title">SNAKE.EXE — animated game preview</title><desc id="desc">A recognizable neon green snake automatically moves across a dark retro arcade grid toward a glowing cyan food node.</desc>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#061a28"/><stop offset="1" stop-color="#020617"/></linearGradient><pattern id="grid" width="25" height="25" patternUnits="userSpaceOnUse"><path d="M25 0H0V25" fill="none" stroke="#00ff9c" stroke-opacity=".13"/></pattern><filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<rect width="900" height="340" rx="18" fill="url(#bg)"/><rect x="12" y="12" width="876" height="316" rx="12" fill="url(#grid)" stroke="#00ff9c" stroke-opacity=".45"/>
+<text x="34" y="43" font-family="monospace" font-size="15" fill="#00ff9c" letter-spacing="3">SNAKE.EXE</text><text x="866" y="43" text-anchor="end" font-family="monospace" font-size="12" fill="#7baca0">ARCADE // LIVE DEMO</text>
+<rect x="34" y="60" width="832" height="238" rx="8" fill="#020914" fill-opacity=".25" stroke="#00ff9c" stroke-opacity=".13"/>
+<g opacity=".9"><circle cx="640" cy="174" r="13" fill="#00d9ff" filter="url(#glow)"><animate attributeName="r" values="9;13;9" dur="2.8s" repeatCount="indefinite"/></circle><circle cx="640" cy="174" r="4" fill="#dffcff"/></g>
+<g filter="url(#glow)">
+<rect x="170" y="130" width="22" height="22" rx="5" fill="#d7fff0"><animateMotion path="M0 0 H350 V100 H100 V40 H450 V-40 H0" dur="24s" repeatCount="indefinite" calcMode="linear"/></rect>
+<rect x="145" y="130" width="22" height="22" rx="5" fill="#00ff9c"><animateMotion path="M0 0 H350 V100 H100 V40 H450 V-40 H0" dur="24s" begin="-0.55s" repeatCount="indefinite" calcMode="linear"/></rect>
+<rect x="120" y="130" width="22" height="22" rx="5" fill="#00ff9c"><animateMotion path="M0 0 H350 V100 H100 V40 H450 V-40 H0" dur="24s" begin="-1.1s" repeatCount="indefinite" calcMode="linear"/></rect>
+<rect x="95" y="130" width="22" height="22" rx="5" fill="#00ff9c"><animateMotion path="M0 0 H350 V100 H100 V40 H450 V-40 H0" dur="24s" begin="-1.65s" repeatCount="indefinite" calcMode="linear"/></rect>
+<rect x="70" y="130" width="22" height="22" rx="5" fill="#00ff9c"><animateMotion path="M0 0 H350 V100 H100 V40 H450 V-40 H0" dur="24s" begin="-2.2s" repeatCount="indefinite" calcMode="linear"/></rect></g>
+<text x="34" y="316" font-family="monospace" font-size="12" fill="#7baca0">AUTO DEMO // SLOWER MOVEMENT</text><text x="866" y="316" text-anchor="end" font-family="monospace" font-size="12" fill="#00ff9c">CLICK TO PLAY ↗</text>
 </svg>
