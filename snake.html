@@ -6,13 +6,13 @@
 <meta name="theme-color" content="#020617">
 <title>SNAKE.EXE — Jack's Arcade</title>
 <style>
-:root{color-scheme:dark;--bg:#020617;--panel:#071426;--line:#12453b;--neon:#00ff9c;--cyan:#00d9ff;--muted:#91aaa6}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at top,#0a2a30 0,#020617 55%);color:#d9fff0;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;display:grid;place-items:center;padding:22px}
+:root{color-scheme:dark;--bg:#020617;--line:#12453b;--neon:#00ff9c;--cyan:#00d9ff;--muted:#91aaa6}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at top,#0a2a30 0,#020617 55%);color:#d9fff0;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;display:grid;place-items:center;padding:16px}
 main{width:min(100%,620px)}.top{text-align:center;margin-bottom:18px}.tag{font-size:11px;letter-spacing:.22em;color:var(--neon)}h1{font-size:clamp(30px,7vw,48px);letter-spacing:.08em;margin:10px 0;color:var(--neon);text-shadow:0 0 22px #00ff9c55}.sub{color:var(--muted);font-size:13px}
-.panel{border:1px solid var(--line);background:#06101eea;border-radius:16px;padding:clamp(12px,3vw,22px);box-shadow:0 0 45px #00ff9c0b, inset 0 0 30px #00d9ff05}
+.panel{border:1px solid var(--line);background:#06101eea;border-radius:16px;padding:clamp(12px,3vw,22px);box-shadow:0 0 45px #00ff9c0b}
 .hud{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;font-size:13px}.score strong{color:var(--neon);font-size:20px}.state{color:var(--cyan);text-align:right}
-canvas{display:block;width:100%;max-width:480px;aspect-ratio:1;margin:0 auto;border:1px solid #17473e;border-radius:8px;background:#030a12;image-rendering:pixelated;touch-action:none}
-.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:15px 0 4px}button,a{font:inherit;text-decoration:none;color:var(--neon);background:#061b1a;border:1px solid #16876a;border-radius:8px;padding:11px 16px;cursor:pointer;transition:.18s}button:hover,a:hover{background:#0a3029;box-shadow:0 0 18px #00ff9c20}button:focus-visible,a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}.controls{display:grid;grid-template-columns:repeat(3,54px);grid-template-rows:repeat(2,44px);gap:7px;justify-content:center;margin:16px auto 8px}.controls button{padding:0;font-size:18px}.controls .up{grid-column:2}.controls .left{grid-column:1;grid-row:2}.controls .down{grid-column:2;grid-row:2}.controls .right{grid-column:3;grid-row:2}.hint{text-align:center;color:var(--muted);font-size:11px;line-height:1.7;margin-top:15px}.hint span{color:var(--neon)}.back{display:inline-block;margin-top:16px;font-size:12px}
+canvas{display:block;width:100%;max-width:480px;aspect-ratio:1;height:auto;margin:0 auto;border:1px solid #17473e;border-radius:8px;background:#030a12;image-rendering:pixelated;touch-action:none}
+.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:15px 0 4px}button,a{font:inherit;text-decoration:none;color:var(--neon);background:#061b1a;border:1px solid #16876a;border-radius:8px;padding:11px 16px;cursor:pointer}button:hover,a:hover{background:#0a3029}button:focus-visible,a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}.controls{display:grid;grid-template-columns:repeat(3,54px);grid-template-rows:repeat(2,44px);gap:7px;justify-content:center;margin:16px auto 8px}.controls button{padding:0;font-size:18px;touch-action:manipulation}.controls .up{grid-column:2}.controls .left{grid-column:1;grid-row:2}.controls .down{grid-column:2;grid-row:2}.controls .right{grid-column:3;grid-row:2}.hint{text-align:center;color:var(--muted);font-size:11px;line-height:1.7;margin-top:15px}.hint span{color:var(--neon)}.back{display:inline-block;margin-top:16px;font-size:12px}
 @media(min-width:560px){.controls{display:none}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -20,31 +20,82 @@ canvas{display:block;width:100%;max-width:480px;aspect-ratio:1;margin:0 auto;bor
 <main>
 <header class="top"><div class="tag">JACK // ARCADE SUBSYSTEM</div><h1>SNAKE.EXE</h1><div class="sub">One more run. Beat your own high score.</div></header>
 <section class="panel" aria-label="Snake game">
-<div class="hud"><div class="score">SCORE <strong id="score">000</strong><br><span class="sub">BEST <span id="best">000</span></span></div><div class="state" id="status" aria-live="polite">SYSTEM READY</div></div>
+<div class="hud"><div class="score">SCORE <strong id="score">000</strong><br><span class="sub">BEST <span id="best">000</span></span></div><div class="state" id="status" aria-live="polite">PRESS START</div></div>
 <canvas id="game" width="480" height="480" aria-label="Snake game board"></canvas>
 <div class="actions"><button id="start">▶ START / RESTART</button><button id="pause">Ⅱ PAUSE</button></div>
 <div class="controls" aria-label="Touch controls"><button class="up" data-dir="up" aria-label="Up">▲</button><button class="left" data-dir="left" aria-label="Left">◀</button><button class="down" data-dir="down" aria-label="Down">▼</button><button class="right" data-dir="right" aria-label="Right">▶</button></div>
-<div class="hint">MOVE: <span>ARROW KEYS</span> / <span>W A S D</span> &nbsp;·&nbsp; PAUSE: <span>SPACE</span><br>Eat the glowing nodes. Don't hit the walls or your own trail.</div>
+<div class="hint">MOVE: <span>ARROW KEYS</span> / <span>W A S D</span> · PAUSE: <span>SPACE</span><br>Eat the glowing nodes. Avoid the walls and your own trail.</div>
 </section>
 <div style="text-align:center"><a class="back" href="https://github.com/digital-coder-jack/digital-coder-jack">↖ BACK TO PROFILE</a></div>
 </main>
 <script>
 (() => {
-const canvas=document.getElementById('game'),ctx=canvas.getContext('2d'),scoreEl=document.getElementById('score'),bestEl=document.getElementById('best'),statusEl=document.getElementById('status'),startBtn=document.getElementById('start'),pauseBtn=document.getElementById('pause');
-const cells=24,size=canvas.width/cells;let snake,food,dir,nextDir,score,best=0,timer=null,running=false,paused=false,ended=false;
-try{best=Number(localStorage.getItem('jack-snake-best')||0)}catch{}bestEl.textContent=String(best).padStart(3,'0');
-function reset(){snake=[{x:8,y:12},{x:7,y:12},{x:6,y:12}];dir={x:1,y:0};nextDir={x:1,y:0};score=0;running=true;paused=false;ended=false;spawnFood();scoreEl.textContent='000';statusEl.textContent='RUNNING';pauseBtn.textContent='Ⅱ PAUSE';draw();stopTimer();timer=setInterval(tick,115)}
-function stopTimer(){if(timer){clearInterval(timer);timer=null}}
-function spawnFood(){let p;do{p={x:Math.floor(Math.random()*cells),y:Math.floor(Math.random()*cells)}}while(snake.some(s=>s.x===p.x&&s.y===p.y));food=p}
-function setDirection(name){const d={up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}}[name];if(!d||d.x===-dir.x&&d.y===-dir.y)return;nextDir=d;if(!running&&!ended)statusEl.textContent='PRESS START'}
-function tick(){if(!running||paused)return;dir=nextDir;const head={x:snake[0].x+dir.x,y:snake[0].y+dir.y};const eating=head.x===food.x&&head.y===food.y;const body=eating?snake:snake.slice(0,-1);if(head.x<0||head.y<0||head.x>=cells||head.y>=cells||body.some(s=>s.x===head.x&&s.y===head.y)){gameOver();return}snake.unshift(head);if(eating){score+=10;scoreEl.textContent=String(score).padStart(3,'0');if(score>best){best=score;bestEl.textContent=String(best).padStart(3,'0');try{localStorage.setItem('jack-snake-best',String(best))}catch{}}spawnFood();if(score%100===0){stopTimer();timer=setInterval(tick,Math.max(65,115-score/20))}}else snake.pop();draw()}
-function gameOver(){running=false;ended=true;stopTimer();statusEl.textContent='GAME OVER';draw();ctx.fillStyle='rgba(2,6,23,.76)';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.textAlign='center';ctx.fillStyle='#ff6688';ctx.font='bold 27px monospace';ctx.fillText('SYSTEM HALTED',240,220);ctx.fillStyle='#d9fff0';ctx.font='15px monospace';ctx.fillText('SCORE: '+score,240,252);ctx.font='12px monospace';ctx.fillText('Press START to retry',240,280)}
-function draw(){ctx.clearRect(0,0,480,480);ctx.strokeStyle='rgba(0,255,156,.055)';ctx.lineWidth=1;for(let i=0;i<=cells;i++){ctx.beginPath();ctx.moveTo(i*size,0);ctx.lineTo(i*size,480);ctx.stroke();ctx.beginPath();ctx.moveTo(0,i*size);ctx.lineTo(480,i*size);ctx.stroke()}if(food){ctx.fillStyle='#00d9ff';ctx.shadowColor='#00d9ff';ctx.shadowBlur=18;ctx.beginPath();ctx.roundRect(food.x*size+4,food.y*size+4,size-8,size-8,5);ctx.fill();ctx.shadowBlur=0}snake.forEach((p,i)=>{ctx.fillStyle=i===0?'#d7fff0':'#00ff9c';ctx.shadowColor=i===0?'#d7fff0':'#00ff9c';ctx.shadowBlur=i===0?13:5;ctx.beginPath();ctx.roundRect(p.x*size+2,p.y*size+2,size-4,size-4,4);ctx.fill()});ctx.shadowBlur=0}
-function togglePause(){if(!running)return;paused=!paused;statusEl.textContent=paused?'PAUSED':'RUNNING';pauseBtn.textContent=paused?'▶ RESUME':'Ⅱ PAUSE';if(paused)stopTimer();else timer=setInterval(tick,Math.max(65,115-score/20))}
-document.addEventListener('keydown',e=>{const map={ArrowUp:'up',w:'up',W:'up',ArrowDown:'down',s:'down',S:'down',ArrowLeft:'left',a:'left',A:'left',ArrowRight:'right',d:'right',D:'right'};if(map[e.key]){e.preventDefault();setDirection(map[e.key])}if(e.code==='Space'){e.preventDefault();togglePause()}});
-document.querySelectorAll('[data-dir]').forEach(b=>{b.addEventListener('click',()=>setDirection(b.dataset.dir));b.addEventListener('pointerdown',e=>{e.preventDefault();setDirection(b.dataset.dir)})});
+const canvas=document.getElementById('game');
+const ctx=canvas.getContext('2d');
+const scoreEl=document.getElementById('score'),bestEl=document.getElementById('best');
+const statusEl=document.getElementById('status'),startBtn=document.getElementById('start'),pauseBtn=document.getElementById('pause');
+const cells=24,size=canvas.width/cells;
+let snake=[],food=null,dir={x:1,y:0},nextDir={x:1,y:0},score=0,best=0,timer=null,running=false,paused=false,ended=false;
+try{best=Number(localStorage.getItem('jack-snake-best')||0)}catch{}
+bestEl.textContent=String(best).padStart(3,'0');
+const speed=()=>Math.max(65,115-Math.floor(score/100)*7);
+function stopTimer(){if(timer!==null){clearInterval(timer);timer=null}}
+function spawnFood(){
+ const empty=[];
+ for(let y=0;y<cells;y++)for(let x=0;x<cells;x++)if(!snake.some(p=>p.x===x&&p.y===y))empty.push({x,y});
+ food=empty.length?empty[Math.floor(Math.random()*empty.length)]:null;
+}
+function reset(){
+ stopTimer();snake=[{x:8,y:12},{x:7,y:12},{x:6,y:12}];dir={x:1,y:0};nextDir={x:1,y:0};
+ score=0;running=true;paused=false;ended=false;spawnFood();scoreEl.textContent='000';
+ statusEl.textContent='RUNNING';pauseBtn.textContent='Ⅱ PAUSE';draw();timer=setInterval(tick,speed());
+}
+function setDirection(name){
+ const d={up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}}[name];
+ if(!d||d.x===-nextDir.x&&d.y===-nextDir.y)return;
+ nextDir=d;
+}
+function tick(){
+ if(!running||paused)return;
+ dir=nextDir;
+ const head={x:snake[0].x+dir.x,y:snake[0].y+dir.y};
+ const eating=!!food&&head.x===food.x&&head.y===food.y;
+ const body=eating?snake:snake.slice(0,-1);
+ if(head.x<0||head.y<0||head.x>=cells||head.y>=cells||body.some(p=>p.x===head.x&&p.y===head.y)){gameOver();return}
+ snake.unshift(head);
+ if(eating){
+  score+=10;scoreEl.textContent=String(score).padStart(3,'0');
+  if(score>best){best=score;bestEl.textContent=String(best).padStart(3,'0');try{localStorage.setItem('jack-snake-best',String(best))}catch{}}
+  spawnFood();if(!food){gameOver(true);return}
+  stopTimer();timer=setInterval(tick,speed());
+ }else snake.pop();
+ draw();
+}
+function gameOver(won=false){
+ running=false;ended=true;stopTimer();statusEl.textContent=won?'BOARD CLEARED':'GAME OVER';draw();
+ ctx.fillStyle='rgba(2,6,23,.78)';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.textAlign='center';
+ ctx.fillStyle=won?'#00ff9c':'#ff6688';ctx.font='bold 25px monospace';ctx.fillText(won?'BOARD CLEARED':'SYSTEM HALTED',240,220);
+ ctx.fillStyle='#d9fff0';ctx.font='15px monospace';ctx.fillText('SCORE: '+score,240,252);ctx.font='12px monospace';ctx.fillText('Press START to play again',240,280);
+}
+function draw(){
+ ctx.clearRect(0,0,480,480);ctx.strokeStyle='rgba(0,255,156,.055)';ctx.lineWidth=1;
+ for(let i=0;i<=cells;i++){ctx.beginPath();ctx.moveTo(i*size,0);ctx.lineTo(i*size,480);ctx.stroke();ctx.beginPath();ctx.moveTo(0,i*size);ctx.lineTo(480,i*size);ctx.stroke()}
+ if(food){ctx.fillStyle='#00d9ff';ctx.shadowColor='#00d9ff';ctx.shadowBlur=18;ctx.beginPath();ctx.roundRect(food.x*size+4,food.y*size+4,size-8,size-8,5);ctx.fill();ctx.shadowBlur=0}
+ snake.forEach((p,i)=>{ctx.fillStyle=i===0?'#d7fff0':'#00ff9c';ctx.shadowColor=i===0?'#d7fff0':'#00ff9c';ctx.shadowBlur=i===0?13:5;ctx.beginPath();ctx.roundRect(p.x*size+2,p.y*size+2,size-4,size-4,4);ctx.fill()});ctx.shadowBlur=0;
+}
+function togglePause(){
+ if(!running)return;
+ paused=!paused;statusEl.textContent=paused?'PAUSED':'RUNNING';pauseBtn.textContent=paused?'▶ RESUME':'Ⅱ PAUSE';
+ if(paused)stopTimer();else timer=setInterval(tick,speed());
+}
+document.addEventListener('keydown',e=>{
+ const map={ArrowUp:'up',w:'up',W:'up',ArrowDown:'down',s:'down',S:'down',ArrowLeft:'left',a:'left',A:'left',ArrowRight:'right',d:'right',D:'right'};
+ if(map[e.key]){e.preventDefault();setDirection(map[e.key])}
+ if(e.code==='Space'){e.preventDefault();togglePause()}
+});
+document.querySelectorAll('[data-dir]').forEach(b=>b.addEventListener('click',()=>setDirection(b.dataset.dir)));
 startBtn.addEventListener('click',reset);pauseBtn.addEventListener('click',togglePause);
-snake=[{x:8,y:12},{x:7,y:12},{x:6,y:12}];dir={x:1,y:0};nextDir=dir;score=0;food={x:16,y:12};draw();statusEl.textContent='PRESS START';
+snake=[{x:8,y:12},{x:7,y:12},{x:6,y:12}];spawnFood();draw();
 })();
 </script>
 </body>
