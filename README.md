@@ -28,11 +28,9 @@
 
 I like understanding how things work, solving problems, and turning ideas into useful projects. I build, test, fix, and improve one step at a time.
 
-## `02 // ACTIVE BUILDS`
+## `02 // ACTIVE BUILD`
 
-<table>
-<tr>
-<td width="50%" valign="top">
+<div align="center">
 
 ### ◈ Notely
 
@@ -42,20 +40,7 @@ An AI-powered workspace for notes, learning, and study tools.
 
 <a href="https://github.com/digital-coder-jack/N-o-t-e-l-y-">↗ ACCESS REPOSITORY</a>
 
-</td>
-<td width="50%" valign="top">
-
-### ◈ Study Sphere AI
-
-An AI-assisted study project exploring full-stack development.
-
-`FOCUS: PYTHON · FASTAPI · ANDROID`
-
-<a href="https://github.com/digital-coder-jack/Study-Sphere-AI">↗ ACCESS REPOSITORY</a>
-
-</td>
-</tr>
-</table>
+</div>
 
 ## `03 // SNAKE.EXE`
 
