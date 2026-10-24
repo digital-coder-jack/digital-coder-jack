@@ -8,15 +8,15 @@
 <style>
 :root{color-scheme:dark;--line:#12453b;--neon:#00ff9c;--cyan:#00d9ff;--muted:#91aaa6}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:#020617;color:#d9fff0;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;display:grid;place-items:center;padding:16px;overflow-x:hidden}
-#matrix{position:fixed;inset:0;width:100%;height:100%;z-index:-1;opacity:.42;pointer-events:none}
-main{width:min(100%,620px);position:relative;z-index:1}
-.top{text-align:center;margin-bottom:18px}.tag{font-size:11px;letter-spacing:.22em;color:var(--neon)}h1{font-size:clamp(30px,7vw,48px);letter-spacing:.08em;margin:10px 0;color:var(--neon);text-shadow:0 0 22px #00ff9c55}.sub{color:var(--muted);font-size:13px}
-.panel{border:1px solid #00ff9c55;background:rgba(3,12,22,.88);backdrop-filter:blur(8px);border-radius:16px;padding:clamp(12px,3vw,22px);box-shadow:0 0 45px #00ff9c12,inset 0 0 30px #00d9ff05}
+body{margin:0;min-height:100vh;background:#020617;color:#d9fff0;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;display:grid;place-items:center;padding:clamp(10px,2.5vw,28px);overflow-x:hidden;isolation:isolate}
+#matrix{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;opacity:.34;pointer-events:none}
+main{width:min(100%,900px);position:relative;z-index:1}
+.top{text-align:center;margin-bottom:22px}.tag{font-size:11px;letter-spacing:.22em;color:var(--neon)}h1{font-size:clamp(30px,7vw,48px);letter-spacing:.08em;margin:10px 0;color:var(--neon);text-shadow:0 0 22px #00ff9c55}.sub{color:var(--muted);font-size:13px}
+.panel{border:1px solid #00ff9c66;background:rgba(3,12,22,.84);backdrop-filter:blur(12px);border-radius:20px;padding:clamp(12px,3vw,26px);box-shadow:0 0 55px #00ff9c18,inset 0 0 34px #00d9ff08}
 .hud{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;font-size:13px}.score strong{color:var(--neon);font-size:20px}.state{color:var(--cyan);text-align:right}
-canvas{display:block;width:100%;max-width:480px;aspect-ratio:1;height:auto;margin:0 auto;border:1px solid #17473e;border-radius:8px;background:rgba(1,7,13,.94);image-rendering:pixelated;touch-action:none}
-.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:15px 0 4px}button,a{font:inherit;text-decoration:none;color:var(--neon);background:#061b1a;border:1px solid #16876a;border-radius:8px;padding:11px 16px;cursor:pointer}button:hover,a:hover{background:#0a3029;box-shadow:0 0 18px #00ff9c20}button:focus-visible,a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}.controls{display:grid;grid-template-columns:repeat(3,54px);grid-template-rows:repeat(2,44px);gap:7px;justify-content:center;margin:16px auto 8px}.controls button{padding:0;font-size:18px;touch-action:manipulation}.controls .up{grid-column:2}.controls .left{grid-column:1;grid-row:2}.controls .down{grid-column:2;grid-row:2}.controls .right{grid-column:3;grid-row:2}.hint{text-align:center;color:var(--muted);font-size:11px;line-height:1.7;margin-top:15px}.hint span{color:var(--neon)}.back{display:inline-block;margin-top:16px;font-size:12px}
-@media(min-width:560px){.controls{display:none}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+canvas#game{display:block;width:min(100%,680px);aspect-ratio:1;height:auto;margin:0 auto;border:1px solid #1b7258;border-radius:12px;background:rgba(1,7,13,.97);image-rendering:pixelated;touch-action:none;box-shadow:0 0 30px #00ff9c12}
+.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:18px 0 4px}.actions button{min-width:170px;padding:13px 18px}button,a{font:inherit;text-decoration:none;color:var(--neon);background:#061b1a;border:1px solid #16876a;border-radius:8px;padding:11px 16px;cursor:pointer}button:hover,a:hover{background:#0a3029;box-shadow:0 0 18px #00ff9c20}button:focus-visible,a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}.controls{display:grid;grid-template-columns:repeat(3,62px);grid-template-rows:repeat(2,48px);gap:8px;justify-content:center;margin:18px auto 8px}.controls button{padding:0;font-size:18px;touch-action:manipulation}.controls .up{grid-column:2}.controls .left{grid-column:1;grid-row:2}.controls .down{grid-column:2;grid-row:2}.controls .right{grid-column:3;grid-row:2}.hint{text-align:center;color:var(--muted);font-size:11px;line-height:1.7;margin-top:15px}.hint span{color:var(--neon)}.back{display:inline-block;margin-top:16px;font-size:12px}
+@media(min-width:700px){.controls{display:none}}@media(max-width:480px){body{padding:8px}.top{margin-bottom:14px}.panel{padding:10px;border-radius:14px}.hud{font-size:11px}.score strong{font-size:18px}.actions button{min-width:0;flex:1;padding:12px 8px;font-size:12px}.controls{grid-template-columns:repeat(3,58px);grid-template-rows:repeat(2,46px)}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
@@ -37,9 +37,9 @@ canvas{display:block;width:100%;max-width:480px;aspect-ratio:1;height:auto;margi
 (() => {
  const canvas=document.getElementById('matrix'),ctx=canvas.getContext('2d');
  const chars='アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
- let columns=[],font=15,width=0,height=0,raf=0;
+ let columns=[],font=13,width=0,height=0,raf=0;
  function resize(){const dpr=Math.min(window.devicePixelRatio||1,1.5);width=window.innerWidth;height=window.innerHeight;canvas.width=Math.floor(width*dpr);canvas.height=Math.floor(height*dpr);canvas.style.width=width+'px';canvas.style.height=height+'px';ctx.setTransform(dpr,0,0,dpr,0,0);columns=Array.from({length:Math.ceil(width/font)},()=>Math.random()*-height/font)}
- function draw(){ctx.fillStyle='rgba(2,6,23,.075)';ctx.fillRect(0,0,width,height);ctx.font=font+'px monospace';for(let i=0;i<columns.length;i++){const ch=chars[Math.floor(Math.random()*chars.length)],x=i*font,y=columns[i]*font;ctx.fillStyle=Math.random()>.975?'#c8ffe8':'#00ff9c';ctx.fillText(ch,x,y);if(y>height&&Math.random()>.975)columns[i]=0;columns[i]+=.22+Math.random()*.28}raf=requestAnimationFrame(draw)}
+ function draw(){ctx.fillStyle='rgba(2,6,23,.045)';ctx.fillRect(0,0,width,height);ctx.font=font+'px monospace';for(let i=0;i<columns.length;i++){const ch=chars[Math.floor(Math.random()*chars.length)],x=i*font,y=columns[i]*font;ctx.fillStyle=Math.random()>.975?'#c8ffe8':'#00ff9c';ctx.fillText(ch,x,y);if(y>height&&Math.random()>.975)columns[i]=0;columns[i]+=.10+Math.random()*.14}raf=requestAnimationFrame(draw)}
  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){resize();draw();window.addEventListener('resize',resize,{passive:true});document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(raf)}else if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)draw()})}
 })();
 (() => {
@@ -47,7 +47,7 @@ const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');
 const scoreEl=document.getElementById('score'),bestEl=document.getElementById('best'),statusEl=document.getElementById('status'),startBtn=document.getElementById('start'),pauseBtn=document.getElementById('pause');
 const cells=24,size=canvas.width/cells;let snake=[],food=null,dir={x:1,y:0},nextDir={x:1,y:0},score=0,best=0,timer=null,running=false,paused=false;
 try{best=Number(localStorage.getItem('jack-snake-best')||0)}catch{}bestEl.textContent=String(best).padStart(3,'0');
-const speed=()=>Math.max(125,175-Math.floor(score/100)*5);
+const speed=()=>Math.max(175,225-Math.floor(score/100)*4);
 function stopTimer(){if(timer!==null){clearInterval(timer);timer=null}}
 function spawnFood(){const empty=[];for(let y=0;y<cells;y++)for(let x=0;x<cells;x++)if(!snake.some(p=>p.x===x&&p.y===y))empty.push({x,y});food=empty.length?empty[Math.floor(Math.random()*empty.length)]:null}
 function reset(){stopTimer();snake=[{x:8,y:12},{x:7,y:12},{x:6,y:12}];dir={x:1,y:0};nextDir={x:1,y:0};score=0;running=true;paused=false;spawnFood();scoreEl.textContent='000';statusEl.textContent='RUNNING';pauseBtn.textContent='Ⅱ PAUSE';draw();timer=setInterval(tick,speed())}
