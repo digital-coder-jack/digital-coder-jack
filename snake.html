@@ -39,7 +39,7 @@ canvas{display:block;width:100%;max-width:480px;aspect-ratio:1;height:auto;margi
  const chars='アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
  let columns=[],font=15,width=0,height=0,raf=0;
  function resize(){const dpr=Math.min(window.devicePixelRatio||1,1.5);width=window.innerWidth;height=window.innerHeight;canvas.width=Math.floor(width*dpr);canvas.height=Math.floor(height*dpr);canvas.style.width=width+'px';canvas.style.height=height+'px';ctx.setTransform(dpr,0,0,dpr,0,0);columns=Array.from({length:Math.ceil(width/font)},()=>Math.random()*-height/font)}
- function draw(){ctx.fillStyle='rgba(2,6,23,.12)';ctx.fillRect(0,0,width,height);ctx.font=font+'px monospace';for(let i=0;i<columns.length;i++){const ch=chars[Math.floor(Math.random()*chars.length)],x=i*font,y=columns[i]*font;ctx.fillStyle=Math.random()>.975?'#c8ffe8':'#00ff9c';ctx.fillText(ch,x,y);if(y>height&&Math.random()>.975)columns[i]=0;columns[i]+=.45+Math.random()*.55}raf=requestAnimationFrame(draw)}
+ function draw(){ctx.fillStyle='rgba(2,6,23,.075)';ctx.fillRect(0,0,width,height);ctx.font=font+'px monospace';for(let i=0;i<columns.length;i++){const ch=chars[Math.floor(Math.random()*chars.length)],x=i*font,y=columns[i]*font;ctx.fillStyle=Math.random()>.975?'#c8ffe8':'#00ff9c';ctx.fillText(ch,x,y);if(y>height&&Math.random()>.975)columns[i]=0;columns[i]+=.22+Math.random()*.28}raf=requestAnimationFrame(draw)}
  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){resize();draw();window.addEventListener('resize',resize,{passive:true});document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(raf)}else if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)draw()})}
 })();
 (() => {
@@ -47,7 +47,7 @@ const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');
 const scoreEl=document.getElementById('score'),bestEl=document.getElementById('best'),statusEl=document.getElementById('status'),startBtn=document.getElementById('start'),pauseBtn=document.getElementById('pause');
 const cells=24,size=canvas.width/cells;let snake=[],food=null,dir={x:1,y:0},nextDir={x:1,y:0},score=0,best=0,timer=null,running=false,paused=false;
 try{best=Number(localStorage.getItem('jack-snake-best')||0)}catch{}bestEl.textContent=String(best).padStart(3,'0');
-const speed=()=>Math.max(65,115-Math.floor(score/100)*7);
+const speed=()=>Math.max(125,175-Math.floor(score/100)*5);
 function stopTimer(){if(timer!==null){clearInterval(timer);timer=null}}
 function spawnFood(){const empty=[];for(let y=0;y<cells;y++)for(let x=0;x<cells;x++)if(!snake.some(p=>p.x===x&&p.y===y))empty.push({x,y});food=empty.length?empty[Math.floor(Math.random()*empty.length)]:null}
 function reset(){stopTimer();snake=[{x:8,y:12},{x:7,y:12},{x:6,y:12}];dir={x:1,y:0};nextDir={x:1,y:0};score=0;running=true;paused=false;spawnFood();scoreEl.textContent='000';statusEl.textContent='RUNNING';pauseBtn.textContent='Ⅱ PAUSE';draw();timer=setInterval(tick,speed())}
