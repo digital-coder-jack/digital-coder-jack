@@ -64,6 +64,10 @@ A neon arcade game. Open the game page, press **Start**, and move with **Arrow k
 <div align="center">
 
 <a href="https://digital-coder-jack.github.io/digital-coder-jack/snake.html">
+  <img width="100%" src="https://raw.githubusercontent.com/digital-coder-jack/digital-coder-jack/main/snake-preview.svg" alt="Animated auto-playing Snake game preview — click to play" />
+</a>
+
+<a href="https://digital-coder-jack.github.io/digital-coder-jack/snake.html">
   <img src="https://img.shields.io/badge/▶_PLAY_SNAKE.EXE-00ff9c?style=for-the-badge&labelColor=020617" alt="Play Snake game" />
 </a>
 
