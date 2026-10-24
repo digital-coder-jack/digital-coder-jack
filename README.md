@@ -3,14 +3,13 @@
 <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:020617,25:06152a,65:00ff9c,100:020617&height=210&section=header&text=JACK%20%2F%2F%20DIGITAL%20GHOST&fontSize=34&fontColor=00ff9c&fontAlignY=36&desc=BUILD%20IN%20SILENCE.%20SHIP%20WITH%20IMPACT.&descSize=13&descColor=d1fae5&animation=fadeIn" alt="Cyberpunk header" />
 
 <a href="https://github.com/digital-coder-jack">
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=18&duration=2400&pause=800&color=00FF9C&center=true&vCenter=true&repeat=true&width=680&height=55&lines=%3E+booting+jack.exe...;%3E+student+%7C+developer+%7C+builder;%3E+turning+ideas+into+working+software;%3E+debug.+learn.+repeat." alt="Terminal intro" />
+  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=18&duration=2400&pause=800&color=00FF9C&center=true&vCenter=true&repeat=true&width=680&height=55&lines=%3E+booting+jack.exe...;%3E+developer+%7C+builder;%3E+turning+ideas+into+working+software;%3E+debug.+learn.+repeat." alt="Terminal intro" />
 </a>
 
 <br/>
 
 <img src="https://komarev.com/ghpvc/?username=digital-coder-jack&style=for-the-badge&color=00ff9c&label=PROFILE+SCANS" alt="Profile views" />
 <img src="https://img.shields.io/github/followers/digital-coder-jack?style=for-the-badge&logo=github&label=FOLLOWERS&color=071a2f&labelColor=020617" alt="GitHub followers" />
-<img src="https://img.shields.io/badge/STATUS-LEARNING%20%2F%20BUILDING-00ff9c?style=for-the-badge&labelColor=020617" alt="Status" />
 
 </div>
 
@@ -21,24 +20,15 @@
 ```text
 ┌──────────────────────────────────────────────────────┐
 │  USER       : JACK                                    │
-│  CLASS      : STUDENT / DEVELOPER / BUILDER           │
-│  CURRENT    : WEB DEVELOPMENT · JAVASCRIPT · AI       │
-│  WORKFLOW   : PLAN → BUILD → DEBUG → IMPROVE           │
+│  ROLE       : DEVELOPER / BUILDER                     │
+│  WORKFLOW   : PLAN → BUILD → DEBUG → IMPROVE          │
 │  DIRECTIVE  : NEVER STOP LEARNING                     │
 └──────────────────────────────────────────────────────┘
 ```
 
-I like understanding how things work, solving problems, and turning ideas into useful projects. I'm learning by building, breaking things, fixing them, and shipping improvements one step at a time.
+I like understanding how things work, solving problems, and turning ideas into useful projects. I build, test, fix, and improve one step at a time.
 
-## `02 // TECH ARSENAL`
-
-<div align="center">
-
-<img src="https://skillicons.dev/icons?i=html,css,js,react,nodejs,python,fastapi,git,github,vscode&theme=dark&perline=5" alt="Technology stack" />
-
-</div>
-
-## `03 // ACTIVE BUILDS`
+## `02 // ACTIVE BUILDS`
 
 <table>
 <tr>
@@ -46,7 +36,7 @@ I like understanding how things work, solving problems, and turning ideas into u
 
 ### ◈ Notely
 
-An AI-powered workspace concept for notes, learning, and study tools.
+An AI-powered workspace for notes, learning, and study tools.
 
 `FOCUS: PRODUCT UX · WEB · AI`
 
@@ -57,7 +47,7 @@ An AI-powered workspace concept for notes, learning, and study tools.
 
 ### ◈ Study Sphere AI
 
-A learning project exploring AI-assisted study workflows and full-stack development.
+An AI-assisted study project exploring full-stack development.
 
 `FOCUS: PYTHON · FASTAPI · ANDROID`
 
@@ -67,9 +57,9 @@ A learning project exploring AI-assisted study workflows and full-stack developm
 </tr>
 </table>
 
-## `04 // SNAKE.EXE`
+## `03 // SNAKE.EXE`
 
-A tiny arcade break, right inside the profile project. Open the game page, hit **Start**, and use **Arrow keys / WASD** (or the on-screen controls on mobile).
+A neon arcade game. Open the game page, press **Start**, and move with **Arrow keys / WASD**. Mobile touch controls are included.
 
 <div align="center">
 
@@ -79,9 +69,9 @@ A tiny arcade break, right inside the profile project. Open the game page, hit *
 
 </div>
 
-> If the game link does not open yet, enable GitHub Pages for this repository: **Settings → Pages → Deploy from a branch → main → /(root) → Save**. The README itself cannot run embedded JavaScript, so the game lives in a separate page.
+> If the game page returns a 404, enable GitHub Pages in this repository: **Settings → Pages → Build and deployment → Deploy from a branch → main → /(root) → Save**. It can take a few minutes to publish.
 
-## `05 // GITHUB TELEMETRY`
+## `04 // GITHUB TELEMETRY`
 
 <div align="center">
 
@@ -94,7 +84,7 @@ A tiny arcade break, right inside the profile project. Open the game page, hit *
 
 </div>
 
-## `06 // CONNECT`
+## `05 // CONNECT`
 
 <div align="center">
 
