@@ -1,16 +1,20 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-view="auto">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#020617">
 <title>SNAKE.EXE — Jack's Arcade</title>
 <style>
-:root{color-scheme:dark;--line:#12453b;--neon:#00ff9c;--cyan:#00d9ff;--muted:#91aaa6}
+:root{color-scheme:dark;--line:#12453b;--neon:#00ff9c;--cyan:#00d9ff;--muted:#91aaa6;--pad:clamp(10px,2.5vw,28px);--board-max:720px;--board-h:calc(100vh - 300px)}
+@supports (height:100svh){:root{--board-h:calc(100svh - 300px)}}
+html[data-view=sm]{--board-max:340px;--board-h:9999px}
+html[data-view=md]{--board-max:500px;--board-h:9999px}
+html[data-view=lg]{--board-max:720px;--board-h:9999px}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:transparent;color:#d9fff0;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;display:grid;place-items:center;padding:clamp(10px,2.5vw,28px);overflow-x:hidden;isolation:isolate}
+body{margin:0;min-height:100vh;min-height:100dvh;background:transparent;color:#d9fff0;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;display:grid;place-items:center;padding:calc(var(--pad) + env(safe-area-inset-top,0px)) calc(var(--pad) + env(safe-area-inset-right,0px)) calc(var(--pad) + env(safe-area-inset-bottom,0px)) calc(var(--pad) + env(safe-area-inset-left,0px));overflow-x:hidden;isolation:isolate}
 body::before{content:"";position:fixed;inset:0;background:#020617;z-index:-1;pointer-events:none}
-#matrix{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;opacity:.4;pointer-events:none}
+#matrix{position:fixed;inset:0;width:100%;height:100%;z-index:0;opacity:.4;pointer-events:none}
 main{width:min(100%,900px);position:relative;z-index:1}
 .top{text-align:center;margin-bottom:22px}
 .tag{font-size:11px;letter-spacing:.22em;color:var(--neon)}
@@ -20,13 +24,13 @@ h1{font-size:clamp(30px,7vw,48px);letter-spacing:.08em;margin:10px 0;color:var(-
 .hud{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;font-size:13px}
 .score strong{color:var(--neon);font-size:20px}
 .state{color:var(--cyan);text-align:right}
-canvas#game{display:block;width:min(100%,680px);aspect-ratio:1;height:auto;margin:0 auto;border:1px solid #1b7258;border-radius:12px;background:rgba(1,7,13,.97);image-rendering:pixelated;touch-action:none;box-shadow:0 0 30px #00ff9c12}
+canvas#game{display:block;width:max(220px,min(100%,var(--board-max),var(--board-h)));max-width:100%;aspect-ratio:1;height:auto;margin:0 auto;border:1px solid #1b7258;border-radius:12px;background:rgba(1,7,13,.97);touch-action:none;box-shadow:0 0 30px #00ff9c12}
 .actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:18px 0 4px}
 .actions button{min-width:170px;padding:13px 18px}
 button,a{font:inherit;text-decoration:none;color:var(--neon);background:#061b1a;border:1px solid #16876a;border-radius:8px;padding:11px 16px;cursor:pointer}
 button:hover,a:hover{background:#0a3029;box-shadow:0 0 18px #00ff9c20}
 button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
-.controls{display:grid;grid-template-columns:repeat(3,62px);grid-template-rows:repeat(2,48px);gap:8px;justify-content:center;margin:18px auto 8px}
+.controls{display:none;grid-template-columns:repeat(3,clamp(54px,17vw,78px));grid-template-rows:repeat(2,clamp(46px,13vw,62px));gap:8px;justify-content:center;margin:18px auto 8px}
 .controls button{padding:0;font-size:18px;touch-action:manipulation}
 .controls .up{grid-column:2}.controls .left{grid-column:1;grid-row:2}.controls .down{grid-column:2;grid-row:2}.controls .right{grid-column:3;grid-row:2}
 
@@ -51,8 +55,24 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,su
 .hint{text-align:center;color:var(--muted);font-size:11px;line-height:1.7;margin-top:15px}
 .hint span{color:var(--neon)}
 .back{display:inline-block;margin-top:16px;font-size:12px}
-@media(min-width:700px){.controls{display:none}}
-@media(max-width:480px){body{padding:8px}.top{margin-bottom:14px}.panel{padding:10px;border-radius:14px}.hud{font-size:11px}.score strong{font-size:18px}.actions button{min-width:0;flex:1;padding:12px 8px;font-size:12px}.controls{grid-template-columns:repeat(3,58px);grid-template-rows:repeat(2,46px)}}
+button,select,summary,input{touch-action:manipulation}
+/* on-screen D-pad: phones/tablets (touch) and any narrow window */
+@media (max-width:699px),(pointer:coarse){.controls{display:grid}}
+@media(max-width:480px){:root{--pad:8px}.top{margin-bottom:14px}.panel{padding:10px;border-radius:14px}.hud{font-size:11px}.score strong{font-size:18px}.actions button{min-width:0;flex:1;padding:12px 8px;font-size:12px}}
+/* short landscape screens (phones on their side): board on the left, controls on the right */
+@media (orientation:landscape) and (max-height:560px){
+:root{--pad:8px;--board-h:calc(100vh - 90px)}
+body{place-items:start center}
+main{width:min(100%,1000px)}
+.top{display:none}
+.panel{display:grid;grid-template-columns:auto minmax(220px,1fr);gap:6px 18px;align-items:start;padding:10px}
+canvas#game{grid-column:1;grid-row:1/span 6;margin:0;max-width:none;width:max(200px,min(var(--board-max),var(--board-h),56vw))}
+.panel>:not(canvas){grid-column:2;min-width:0}
+.hud{margin:0}.actions{margin:6px 0 2px}.actions button{min-width:0;flex:1;padding:10px 8px;font-size:12px}
+.controls{margin:6px auto 2px;grid-template-columns:repeat(3,56px);grid-template-rows:repeat(2,44px)}
+.settings{margin-top:6px}.hint{margin-top:6px}.back{margin-top:8px}
+}
+@supports (height:100svh){@media (orientation:landscape) and (max-height:560px){:root{--board-h:calc(100svh - 90px)}}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -66,15 +86,16 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,su
 <div class="actions"><button id="start" type="button">▶ START / RESTART</button><button id="pause" type="button">Ⅱ PAUSE</button></div>
 <div class="controls" aria-label="Touch controls"><button class="up" data-dir="up" aria-label="Up" type="button">▲</button><button class="left" data-dir="left" aria-label="Left" type="button">◀</button><button class="down" data-dir="down" aria-label="Down" type="button">▼</button><button class="right" data-dir="right" aria-label="Right" type="button">▶</button></div>
 
-<details class="settings" open>
+<details class="settings" id="settingsBox" open>
 <summary>SETTINGS</summary>
 <div class="set-grid">
  <label class="field"><span class="row"><span>Speed</span><output id="speedOut">4</output></span><input type="range" id="speed" min="1" max="10" step="1"></label>
- <label class="field"><span>Board size</span><select id="grid"><option value="16">Small (16×16)</option><option value="20">Medium (20×20)</option><option value="24">Classic (24×24)</option><option value="32">Large (32×32)</option></select></label>
+ <label class="field"><span>Grid size</span><select id="grid"><option value="16">Small (16×16)</option><option value="20">Medium (20×20)</option><option value="24">Classic (24×24)</option><option value="32">Large (32×32)</option></select></label>
  <label class="field"><span>Walls</span><select id="walls"><option value="solid">Solid (hit = game over)</option><option value="wrap">Wrap around</option></select></label>
  <label class="field"><span>Matrix rain</span><select id="rain"><option value="off">Off</option><option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option></select></label>
+ <label class="field"><span>Display size</span><select id="view"><option value="auto">Auto (fits your screen)</option><option value="sm">Compact</option><option value="md">Comfortable</option><option value="lg">Large</option></select></label>
  <label class="field check"><input type="checkbox" id="ramp"><span>Speed up as score grows</span></label>
- <div class="set-actions"><button id="defaults" type="button">Reset settings</button><span class="set-note">Speed, walls and rain apply instantly. Changing board size stops the current run.</span></div>
+ <div class="set-actions"><button id="defaults" type="button">Reset settings</button><span class="set-note">Speed, walls, rain and display size apply instantly. Changing grid size stops the current run.</span></div>
 </div>
 </details>
 
@@ -85,7 +106,7 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,su
 <script>
 /* ---------- shared settings ---------- */
 const SETTINGS_KEY='jack-snake-settings';
-const DEFAULTS={speed:4,cells:24,wrap:false,ramp:true,rain:'medium'};
+const DEFAULTS={speed:4,cells:24,wrap:false,ramp:true,rain:'medium',view:'auto'};
 const cfg={...DEFAULTS};
 try{
   const saved=JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}');
@@ -95,6 +116,8 @@ cfg.speed=Math.min(10,Math.max(1,Number(cfg.speed)||DEFAULTS.speed));
 if(![16,20,24,32].includes(Number(cfg.cells)))cfg.cells=DEFAULTS.cells;
 cfg.cells=Number(cfg.cells);
 if(!['off','low','medium','high'].includes(cfg.rain))cfg.rain=DEFAULTS.rain;
+if(!['auto','sm','md','lg'].includes(cfg.view))cfg.view=DEFAULTS.view;
+document.documentElement.dataset.view=cfg.view;
 cfg.wrap=!!cfg.wrap;cfg.ramp=cfg.ramp!==false;
 const saveCfg=()=>{try{localStorage.setItem(SETTINGS_KEY,JSON.stringify(cfg))}catch{}};
 
@@ -170,9 +193,9 @@ const rain=(()=>{
 const $=id=>document.getElementById(id);
 const canvas=$('game'),ctx=canvas.getContext('2d');
 const scoreEl=$('score'),bestEl=$('best'),statusEl=$('status'),startBtn=$('start'),pauseBtn=$('pause');
-const speedIn=$('speed'),speedOut=$('speedOut'),gridSel=$('grid'),wallsSel=$('walls'),rainSel=$('rain'),rampChk=$('ramp'),defaultsBtn=$('defaults');
-const W=canvas.width;
-let cells=cfg.cells,size=W/cells;
+const speedIn=$('speed'),speedOut=$('speedOut'),gridSel=$('grid'),wallsSel=$('walls'),rainSel=$('rain'),rampChk=$('ramp'),defaultsBtn=$('defaults'),viewSel=$('view'),box=$('settingsBox');
+const W=480; // logical board size; the real pixel size follows the screen (see fit())
+let cells=cfg.cells,size=W/cells,scale=1,cssW=480,overlay=null;
 let snake=[],food=null,dir={x:1,y:0},queue=[],score=0,best=0,timer=null,running=false,paused=false;
 
 try{best=Number(localStorage.getItem('jack-snake-best')||0)}catch{}
@@ -197,12 +220,12 @@ function spawnFood(){
   food=empty.length?empty[Math.floor(Math.random()*empty.length)]:null;
 }
 function idle(){
-  stopTimer();running=false;paused=false;score=0;
+  stopTimer();running=false;paused=false;score=0;overlay=null;
   scoreEl.textContent='000';statusEl.textContent='PRESS START';pauseBtn.textContent='Ⅱ PAUSE';
   startSnake();spawnFood();draw();
 }
 function reset(){
-  stopTimer();startSnake();score=0;running=true;paused=false;spawnFood();
+  stopTimer();startSnake();score=0;running=true;paused=false;overlay=null;spawnFood();
   scoreEl.textContent='000';statusEl.textContent='RUNNING';pauseBtn.textContent='Ⅱ PAUSE';
   draw();startTimer();
 }
@@ -233,14 +256,19 @@ function tick(){
   draw();
 }
 function gameOver(won=false){
-  running=false;stopTimer();statusEl.textContent=won?'BOARD CLEARED':'GAME OVER';draw();
-  ctx.fillStyle='rgba(2,6,23,.78)';ctx.fillRect(0,0,W,W);ctx.textAlign='center';
-  ctx.fillStyle=won?'#00ff9c':'#ff6688';ctx.font='bold 25px monospace';ctx.fillText(won?'BOARD CLEARED':'SYSTEM HALTED',W/2,220);
-  ctx.fillStyle='#d9fff0';ctx.font='15px monospace';ctx.fillText('SCORE: '+score,W/2,252);
-  ctx.font='12px monospace';ctx.fillText('Press START to play again',W/2,280);
+  running=false;stopTimer();statusEl.textContent=won?'BOARD CLEARED':'GAME OVER';
+  overlay=won?'won':'over';draw();
+}
+function drawOverlay(){
+  if(!overlay)return;
+  const won=overlay==='won',k=Math.max(1,440/cssW); // keeps the text readable on small boards
+  ctx.fillStyle='rgba(2,6,23,.78)';ctx.fillRect(0,0,W,W);ctx.textAlign='center';ctx.textBaseline='alphabetic';
+  ctx.fillStyle=won?'#00ff9c':'#ff6688';ctx.font='bold '+(25*k)+'px monospace';ctx.fillText(won?'BOARD CLEARED':'SYSTEM HALTED',W/2,W/2-20*k);
+  ctx.fillStyle='#d9fff0';ctx.font=(15*k)+'px monospace';ctx.fillText('SCORE: '+score,W/2,W/2+10*k);
+  ctx.font=(12*k)+'px monospace';ctx.fillText('Press START to play again',W/2,W/2+38*k);
 }
 function draw(){
-  ctx.clearRect(0,0,W,W);
+  ctx.setTransform(scale,0,0,scale,0,0);ctx.clearRect(0,0,W,W);
   ctx.strokeStyle='rgba(0,255,156,.055)';ctx.lineWidth=1;
   for(let i=0;i<=cells;i++){
     ctx.beginPath();ctx.moveTo(i*size,0);ctx.lineTo(i*size,W);ctx.stroke();
@@ -248,20 +276,34 @@ function draw(){
   }
   const pad=Math.max(1,Math.round(size*.1)),r=Math.max(2,size*.2);
   if(food){
-    ctx.fillStyle='#00d9ff';ctx.shadowColor='#00d9ff';ctx.shadowBlur=18;
+    ctx.fillStyle='#00d9ff';ctx.shadowColor='#00d9ff';ctx.shadowBlur=18*scale;
     ctx.beginPath();ctx.roundRect(food.x*size+pad*2,food.y*size+pad*2,size-pad*4,size-pad*4,r);ctx.fill();ctx.shadowBlur=0;
   }
   snake.forEach((p,i)=>{
-    ctx.fillStyle=i===0?'#d7fff0':'#00ff9c';ctx.shadowColor=i===0?'#d7fff0':'#00ff9c';ctx.shadowBlur=i===0?13:5;
+    ctx.fillStyle=i===0?'#d7fff0':'#00ff9c';ctx.shadowColor=i===0?'#d7fff0':'#00ff9c';ctx.shadowBlur=(i===0?13:5)*scale;
     ctx.beginPath();ctx.roundRect(p.x*size+pad,p.y*size+pad,size-pad*2,size-pad*2,r);ctx.fill();
   });
   ctx.shadowBlur=0;
+  drawOverlay();
 }
 function togglePause(){
   if(!running)return;
   paused=!paused;statusEl.textContent=paused?'PAUSED':'RUNNING';pauseBtn.textContent=paused?'▶ RESUME':'Ⅱ PAUSE';
   if(paused)stopTimer();else startTimer();
 }
+
+/* ---------- responsive canvas: sharp at any size / pixel ratio ---------- */
+function fit(){
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  cssW=Math.max(1,canvas.clientWidth);
+  const px=Math.max(1,Math.round(cssW*dpr));
+  if(canvas.width!==px||canvas.height!==px){canvas.width=px;canvas.height=px}
+  scale=px/W;
+  draw();
+}
+if('ResizeObserver' in window)new ResizeObserver(fit).observe(canvas);
+window.addEventListener('resize',fit,{passive:true});
+window.addEventListener('orientationchange',()=>setTimeout(fit,150));
 
 /* ---------- input ---------- */
 const KEYS={ArrowUp:'up',w:'up',W:'up',ArrowDown:'down',s:'down',S:'down',ArrowLeft:'left',a:'left',A:'left',ArrowRight:'right',d:'right',D:'right'};
@@ -288,7 +330,7 @@ canvas.addEventListener('touchend',()=>{touch=null});
 function syncUI(){
   speedIn.value=cfg.speed;speedOut.textContent=cfg.speed;
   gridSel.value=String(cfg.cells);wallsSel.value=cfg.wrap?'wrap':'solid';
-  rainSel.value=cfg.rain;rampChk.checked=cfg.ramp;
+  rainSel.value=cfg.rain;rampChk.checked=cfg.ramp;viewSel.value=cfg.view;
   if(rain.reduced){rainSel.value='off';rainSel.disabled=true;rainSel.title='Disabled: your system prefers reduced motion'}
 }
 speedIn.addEventListener('input',()=>{
@@ -298,15 +340,17 @@ speedIn.addEventListener('input',()=>{
 rampChk.addEventListener('change',()=>{cfg.ramp=rampChk.checked;saveCfg();if(running&&!paused)startTimer()});
 wallsSel.addEventListener('change',()=>{cfg.wrap=wallsSel.value==='wrap';saveCfg();wallsSel.blur()});
 rainSel.addEventListener('change',()=>{cfg.rain=rainSel.value;saveCfg();rain.setLevel(cfg.rain);rainSel.blur()});
+viewSel.addEventListener('change',()=>{cfg.view=viewSel.value;document.documentElement.dataset.view=cfg.view;saveCfg();viewSel.blur()});
 gridSel.addEventListener('change',()=>{
   cfg.cells=Number(gridSel.value);cells=cfg.cells;size=W/cells;saveCfg();idle();gridSel.blur();
 });
 defaultsBtn.addEventListener('click',()=>{
-  Object.assign(cfg,DEFAULTS);saveCfg();syncUI();
+  Object.assign(cfg,DEFAULTS);document.documentElement.dataset.view=cfg.view;saveCfg();syncUI();
   cells=cfg.cells;size=W/cells;rain.setLevel(cfg.rain);idle();defaultsBtn.blur();
 });
 
-syncUI();rain.setLevel(cfg.rain);idle();
+if(matchMedia('(max-width:699px), (max-height:560px)').matches)box.open=false; // keep small screens uncluttered
+syncUI();rain.setLevel(cfg.rain);idle();fit();
 })();
 </script>
 </body>
